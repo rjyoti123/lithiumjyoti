@@ -1,6 +1,6 @@
 const express=require('express')
 
-const userController= require("../controllers/userController.js");
+const userController=require('../Controller/userController');
 
 const { authenticate, authorise } = require('../Middleware/auth');
 
@@ -8,7 +8,7 @@ const router=express.Router();
 
 router.get("/home",(req,res)=>{
 
-    res.status(400).send("Welcome to the new world");
+    res.status(400).send("Welcome to Programming Yatra");
 
 })
 

@@ -1,22 +1,32 @@
 const jwt = require("jsonwebtoken");
-const authenticate = function(req, req, next) {
+
+const authenticate = (req, res, next) => {
+  try {
     let token = req.headers["x-auth-token"];
-    if(!token) return res.send({status: false,msg:"token must be present"})
-    let decodedToken = jwt.verify(token,"lithium-jyoti")
-    if(!decodedToken){
-      return res.send({status: false, msg: "token is invalid"})
-   }
-   req.loggedInUser = decodedToken.userId
-    next()
-}
+    if (!token) return res.status(404).send(" token must be required");
 
-const authorise = function(req, res, next) {
-    let checkAuthorise = req.params.userId
-    if(checkAuthorise !== req.loggedInUser){
-     return res.send({status: false, msg: "ooooh... permission denied"})
-    } 
-    next()
-}
+    let decodedToken = jwt.verify(token, "jyoti");
+    if (!decodedToken) {
+      return res.status(401).send({ msg: "Access Denied" });
+    }
+    req.loggedIn = decodedToken.userId;
+    next();
+  } catch (err) {
+    res.status(500).send({ msg: "Access Denied" });
+  }
+};
 
-module.exports.authenticate = authenticate
-module.exports.authorise = authorise
+const authorise = (req, res, next) => {
+ try {
+  let checkAuthorise = req.params.userId;
+  if (checkAuthorise !== req.loggedIn) {
+    return res.status(403).send({ msg: "ooooh ! You are not valid User" });
+  }
+  next();
+ } catch (error) {
+  return res.status(500).send({ message: error.message });
+ }
+};
+
+module.exports.authenticate = authenticate;
+module.exports.authorise = authorise;
