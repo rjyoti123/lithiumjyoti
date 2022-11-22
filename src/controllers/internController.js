@@ -30,7 +30,11 @@ const interData = async function (req, res) {
         if (existmobile) return res.status(400).send({ status: false, message: 'This mobile already registered.' });
 
         const result = await internModel.create(data)
-        res.status(201).send({ status: true, data: result })
+        res.status(201).send({ status: true, data: {isDeleted : result.isDeleted,
+        name : result.name,
+        email : result.email,
+        mobile : result.mobile,
+        collegeId : "ObjectId"+"("+result.collegeId+")"} })
 
     } catch (error) {
         res.status(500).send({ status: false, msg: error.message })
