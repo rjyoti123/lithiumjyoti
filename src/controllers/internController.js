@@ -29,7 +29,7 @@ const interData = async function (req, res) {
         
 
         const college = await collegeModels.findOne({name:collegeName,isDeleted:false})
-        if(!college)  return res.status(404).send({ status: false, message: "No such college found." })
+        if(!college)  return res.status(400).send({ status: false, message: "No such college found." })
         
 
 

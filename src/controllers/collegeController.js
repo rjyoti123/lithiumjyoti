@@ -30,7 +30,7 @@ const createCollege = async (req, res) => {
     if(!validLogoLink.test(logoLink)){return res.status(400).send({ status: false, message: "Invalid logolink." })}
     
         const result = await collegeModel.create(data);
-    return res.status(201).send({ status: true, data: {name : data.name,
+    return res.status(201).send({ status: true, data: {name : result.name,
     fullName : result.fullName,
     logoLink : result.logoLink,
     isDeleted:result.isDeleted
@@ -47,7 +47,7 @@ const getInterns = async function (req,res){
     let fillters = req.query
     // let tosend = {}
     const{collegeName}=fillters
-    if(collegeName===undefined){ return res.status(400).send({status:false,message:"collegeName must be provided"})}
+    // if(collegeName===undefined){ return res.status(400).send({status:false,message:"collegeName must be provided"})}
     if(Object.keys(fillters).length==0){return res.status(400).send({status:false,message:"cannot provide empty querry"})}
     let colLege= await collegeModel.findOne({name:collegeName})
     if(!colLege){ return res.status(404).send({status:false,message:"No such college found"})}
