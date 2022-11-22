@@ -15,6 +15,10 @@ mongoose.connect("mongodb+srv://AbhinavSIngh:9936522959@cluster0.wtmx5b4.mongodb
 
 app.use('/', route)
 
+app.use(function(req,res){
+    res.status(404).send({status:false,message:"incorrect url"})
+})
+
 app.listen(port,function(){
     console.log("express app running on the port 3000")
 })

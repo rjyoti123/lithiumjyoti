@@ -18,16 +18,22 @@ const createCollege = async (req, res) => {
     if(check){return res.status(400).send({ status: false, message: "college is already prasent." })}
 
     if (!fullName) return res.status(400).send({ status: false, message: "please provide fullname" })
+
+    const validFullName =/^[A-Za-z][A-Za-z ._]{5,20}$/
     
-    if (!validName.test(fullName)) return res.status(400).send({ status: false, message: "Invalid fullname." })
+    if (!validFullName.test(fullName)) return res.status(400).send({ status: false, message: "Invalid fullname." })
 
-
+    
     if (!logoLink) return res.status(400).send({ status: false, message: "please provide logolink" })
+
+    const validLogoLink=/^https?:\/\/(.+\/)+.+(\.(png|jpg|jpeg))$/i
+    if(!validLogoLink.test(logoLink)){return res.status(400).send({ status: false, message: "Invalid logolink." })}
     
         const result = await collegeModel.create(data);
     return res.status(201).send({ status: true, data: {name : data.name,
-    fullName : data.fullName,
-    logoLink : data.logoLink,
+    fullName : result.fullName,
+    logoLink : result.logoLink,
+    isDeleted:result.isDeleted
   }});
   } catch (err) {
     return res.status(500).send({ status: false, message: err.message });

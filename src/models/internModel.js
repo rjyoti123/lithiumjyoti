@@ -22,8 +22,8 @@ const internSchema = new mongoose.Schema({
     trim: true,
    
   },
-  collegeId: {
-    type: mongoose.Schema.Types.ObjectId,
+  collegeName: {
+    type: String,
     required: true,
     trim: true,
     ref: "College",
