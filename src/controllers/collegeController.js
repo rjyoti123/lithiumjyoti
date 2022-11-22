@@ -2,6 +2,7 @@ const internModel = require("../models/internModel")
 const collegeModel = require("../models/collegeModels")
 
 const getInterns = async function (req,res){
+    try{
     let fillters = req.query
     // let tosend = {}
     const{collegeName}=fillters
@@ -11,7 +12,7 @@ const getInterns = async function (req,res){
     if(!colLege){ return res.status(404).send({status:false,message:"No such college found"})}
     let collegeId=colLege._id
     let interns = await internModel.find({isDeleted:false,collegeId:collegeId})
-     colLege.interns=interns
+    //  colLege.interns=interns
     let tosend ={name:colLege.name,
                  fullName:colLege.fullName,
                  logoLink:colLege.logoLink,
@@ -19,6 +20,9 @@ const getInterns = async function (req,res){
     console.log(tosend)
     // tosend.interns=interns
     res.status(200).send({status:true,data:tosend})
+    }catch(error){
+        res.status(500).send({status:false,message:error.message})
+    }
 }
 
 
@@ -30,12 +34,15 @@ const createCollege = async (req, res) => {
 
     if (Object.keys(data).length == 0) return res.status(400).send({ status: false, message: "please provide data" })
 
-    const { name, fullName, logoLink ,isDeleted} = data
+    const { name, fullName, logoLink } = data
 
     if (!name) return res.status(400).send({ status: false, message: "please provide name" })
+    const validName = (/^[a-z .]{3,50}$/)
+    if (!validName.test(name)) return res.status(400).send({ status: false, message: "Invalid name." })
 
     if (!fullName) return res.status(400).send({ status: false, message: "please provide fullname" })
     
+    if (!validName.test(fullName)) return res.status(400).send({ status: false, message: "Invalid fullname." })
 
 
     if (!logoLink) return res.status(400).send({ status: false, message: "please provide logolink" })
