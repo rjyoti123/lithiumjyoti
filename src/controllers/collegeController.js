@@ -51,8 +51,8 @@ const getInterns = async function (req,res){
     if(Object.keys(fillters).length==0){return res.status(400).send({status:false,message:"cannot provide empty querry"})}
     let colLege= await collegeModel.findOne({name:collegeName})
     if(!colLege){ return res.status(404).send({status:false,message:"No such college found"})}
-    let collegeId=colLege._id
-    let interns = await internModel.find({isDeleted:false,collegeId:collegeId}).select({isDeleted:0,createdAt:0,updatedAt:0,collegeId:0,__v:0})
+    // let collegeId=colLege._id
+    let interns = await internModel.find({isDeleted:false,collegeName:collegeName}).select({isDeleted:0,createdAt:0,updatedAt:0,collegeId:0,__v:0})
     
     let tosend ={name:colLege.name,
                  fullName:colLege.fullName,
