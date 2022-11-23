@@ -19,7 +19,7 @@ const createCollege = async (req, res) => {
 
     if (!fullName) return res.status(400).send({ status: false, message: "please provide fullname" })
 
-    const validFullName =/^[A-Za-z][A-Za-z ._]{5,20}$/
+    const validFullName =/^[A-Za-z][A-Za-z ._,]{5,50}$/
     
     if (!validFullName.test(fullName)) return res.status(400).send({ status: false, message: "Invalid fullname." })
 
