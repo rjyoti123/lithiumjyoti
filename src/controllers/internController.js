@@ -40,6 +40,8 @@ const interData = async function (req, res) {
         const existmobile = await internModel.findOne({ mobile });
         if (existmobile) return res.status(400).send({ status: false, message: 'This mobile already registered.' });
 
+        data.collegeId=college._id
+
         
 
         const result = await internModel.create(data)
@@ -47,7 +49,7 @@ const interData = async function (req, res) {
         name : result.name,
         email : result.email,
         mobile : result.mobile,
-        collegeId : college._id}})
+        collegeId : result.collegeId}})
 
     } catch (error) {
         res.status(500).send({ status: false, msg: error.message })

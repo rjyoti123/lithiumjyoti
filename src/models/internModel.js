@@ -22,7 +22,7 @@ const internSchema = new mongoose.Schema({
     trim: true,
    
   },
-  collegeName: {
+  collegeId: {
     type: String,
     required: true,
     trim: true,
