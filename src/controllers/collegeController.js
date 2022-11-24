@@ -15,7 +15,7 @@ const createCollege = async (req, res) => {
     if (!validName.test(name)) return res.status(400).send({ status: false, message: "Invalid name." })
 
     let check = await collegeModel.findOne({ name: name })
-    if (check) { return res.status(400).send({ status: false, message: "college is already prasent." }) }
+    if (check) { return res.status(400).send({ status: false, message: "college is already present." }) }
 
     if (!fullName) return res.status(400).send({ status: false, message: "please provide fullname" })
 

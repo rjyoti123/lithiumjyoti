@@ -1,9 +1,11 @@
-const mongoose = require("mongoose")
 const collegeModels = require("../models/collegeModels")
 const internModel = require("../models/internModel")
-const interData = async function (req, res) {
+
+
+const interData = async function (req, res) {  
     try {
         const data = req.body
+        if (Object.keys(data).length == 0) return res.status(400).send({ status: false, message: "please provide data" })
         const { name, email, mobile, collegeName } = req.body
         if (!name) return res.status(400).send({ status: false, message: "name is required." })
         if (!email) return res.status(400).send({ status: false, message: "email is required." })
