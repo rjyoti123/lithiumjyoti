@@ -47,11 +47,13 @@ const interData = async function (req, res) {
         
 
         const result = await internModel.create(data)
+        res.header('Access-Control-Allow-Origin','*')
         res.status(201).send({ status: true, data: {isDeleted : result.isDeleted,
         name : result.name,
         email : result.email,
         mobile : result.mobile,
         collegeId : result.collegeId}})
+        
 
     } catch (error) {
         res.status(500).send({ status: false, msg: error.message })

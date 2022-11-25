@@ -30,6 +30,7 @@ const createCollege = async (req, res) => {
     if (!validLogoLink.test(logoLink)) { return res.status(400).send({ status: false, message: "Invalid logolink." }) }
 
     const result = await collegeModel.create(data);
+    res.header('Access-Control-Allow-Origin','*')
     return res.status(201).send({
       status: true, data: {
         name: result.name,
@@ -63,6 +64,8 @@ const getInterns = async function (req, res) {
       logoLink: colLege.logoLink,
       interns: interns
     }
+    res.header('Access-Control-Allow-Origin','*')
+
     res.status(200).send({ status: true, data: tosend })
 
 
